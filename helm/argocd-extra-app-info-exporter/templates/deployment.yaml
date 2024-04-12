@@ -34,7 +34,9 @@ spec:
             {{- end }}
             {{- if .Values.argocdExtraAppInfoExporterFlags.metrics.listenAddress }}
             - -metrics-listen-address
-            - "{{ .Values.argocdExtraAppInfoExporterFlags.metrics.listenAddress }}"
+            - "{{ .Values.argocdExtraAppInfoExporterFlags.metrics.listenAddress }}:{{ .Values.argocdExtraAppInfoExporterFlags.metrics.port }}"
+            {{- end }}
+            {{- if .Values.argocdExtraAppInfoExporterFlags.metrics.port }}
             {{- end }}
             {{- if .Values.argocdExtraAppInfoExporterFlags.metrics.path }}
             - -metrics-path
@@ -46,6 +48,8 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          ports:
+          - containerPort: {{ .Values.argocdExtraAppInfoExporterFlags.metrics.port }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
