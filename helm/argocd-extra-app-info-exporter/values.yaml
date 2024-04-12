@@ -1,0 +1,56 @@
+replicaCount: 1
+
+image:
+  repository: mikejoh/argocd-extra-app-info-exporter
+  pullPolicy: IfNotPresent
+  tag: ""
+
+argocdExtraAppInfoExporterFlags:
+  interval: 1m
+  metrics:
+    path: "/metrics"
+    listenAddress: "0.0.0.0:9999"
+    port: 9999
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+serviceMonitor:
+  enabled: true
+  suffix: metrics
+
+podAnnotations: {}
+
+podSecurityContext: {}
+
+securityContext:
+  capabilities:
+    drop:
+      - ALL
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 80
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

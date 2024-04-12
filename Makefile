@@ -8,7 +8,7 @@ CMDPATH := ./cmd/$(APPNAME)
 BUILDPATH := ./build
 
 # Go parameters
-GOVERSION=1.21.4
+GOVERSION=1.22.2
 GOCMD := go
 GOBUILD := $(GOCMD) build
 GOCLEAN := $(GOCMD) clean
@@ -16,15 +16,30 @@ GOTEST := $(GOCMD) test
 GOGET := $(GOCMD) get
 GOMOD := $(GOCMD) mod
 
-LDFLAGS := -ldflags '-s -w \
-						-X=github.com/mikejoh/$(APPNAME)/internal/buildinfo.Version=$(VERSION) \
-						-X=github.com/mikejoh/$(APPNAME)/internal/buildinfo.Name=$(APPNAME) \
-						-X=github.com/mikejoh/$(APPNAME)/internal/buildinfo.GitSHA=$(GIT_SHA)'
+LDFLAGS := -ldflags '-s -w -X=github.com/mikejoh/$(APPNAME)/internal/buildinfo.Version=$(VERSION) -X=github.com/mikejoh/$(APPNAME)/internal/buildinfo.Name=$(APPNAME) -X=github.com/mikejoh/$(APPNAME)/internal/buildinfo.GitSHA=$(GIT_SHA)'
+
+# Container image parameters
+IMAGE_NAME=$(APPNAME)
+IMAGE_REGISTRY=mikejoh
+CHART_REPOSITORY=""
 
 all: test build
 
 build:
 	$(GOBUILD) $(LDFLAGS) -v -o $(BUILDPATH)/$(APPNAME) $(CMDPATH)
+
+docker-build:
+	docker build \
+		-t $(IMAGE_REGISTRY)/$(IMAGE_NAME):$(VERSION) \
+		--build-arg=GOVERSION=$(GOVERSION) \
+		--build-arg VERSION=$(VERSION) \
+		--build-arg APPNAME=$(APPNAME) \
+		--build-arg GIT_SHA=$(GIT_SHA) \
+		.
+
+docker-push:
+	docker push \
+		$(IMAGE_REGISTRY)/$(IMAGE_NAME):$(VERSION)
 
 test: 
 	$(GOTEST) -v ./...
