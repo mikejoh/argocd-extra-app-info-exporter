@@ -2,7 +2,9 @@
 
 `argocd-extra-app-info-exporter` - Exports that one missing metric from ArgoCD.
 
-This exporter exports a `argocd_extra_app_info` metric which looks like the already exported `argocd_app_info` metric but with the `targetRevision` field as label.
+This exporter exports a `argocd_extra_app_info` metric which looks like the original `argocd_app_info` metric but with the `targetRevision` field as the only label.
+
+One of the reasons one would want that label is to create e.g. alerts if the `targetRevision` field is anything else than `main`.
 
 This exporter will probably be around until https://github.com/argoproj/argo-cd/pull/15143 merges!
 
