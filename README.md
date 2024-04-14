@@ -8,4 +8,15 @@ One of the reasons one would want that label is to create e.g. alerts if the `ta
 
 ## Install
 
-1. `make build`
+```
+helm repo add mikejoh https://mikejoh.github.io/helm-charts/
+
+helm upgrade \
+  --install
+  --namespace argocd-extra-app-info-exporter \
+  --create-namespace \
+  mikejoh/argocd-extra-app-info-exporter \
+  argocd-extra-app-info-exporter
+```
+
+Add `--set serviceMonitor.enabled=true` to deploy a `ServiceMonitor` (part of the Prometheus Operator).
