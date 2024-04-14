@@ -1,7 +1,0 @@
-apiVersion: v2
-name: argocd-extra-app-info-exporter
-
-type: application
-
-version: 0.1.0
-appVersion: "0.0.0-d2f1b26-dirty"
