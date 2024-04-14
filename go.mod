@@ -4,6 +4,7 @@ go 1.22.2
 
 require (
 	github.com/argoproj/argo-cd/v2 v2.10.6
+	github.com/prometheus/client_golang v1.16.0
 	k8s.io/apimachinery v0.26.11
 	k8s.io/client-go v0.26.11
 )
@@ -85,7 +86,6 @@ require (
 	github.com/peterbourgon/diskv v2.0.1+incompatible // indirect
 	github.com/pjbgf/sha1cd v0.3.0 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
-	github.com/prometheus/client_golang v1.16.0 // indirect
 	github.com/prometheus/client_model v0.3.0 // indirect
 	github.com/prometheus/common v0.42.0 // indirect
 	github.com/prometheus/procfs v0.10.1 // indirect
