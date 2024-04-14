@@ -68,7 +68,7 @@ func main() {
 
 	prometheus.MustRegister(appExtraInfo)
 
-	log.Printf("starting argocd-extra-app-info-exporter %s, fetching application(s) every %s.", exporterOpts.version, exporterOpts.interval.String())
+	log.Printf("starting argocd-extra-app-info-exporter %s, fetching application(s) every %s", buildinfo.Version, exporterOpts.interval.String())
 	go func() {
 		ticker := time.NewTicker(time.Duration(exporterOpts.interval))
 		for {
@@ -78,7 +78,6 @@ func main() {
 				if err != nil {
 					log.Fatal(err)
 				}
-				log.Printf("fetching extra information about (%d) applications.", len(apps.Items))
 				for _, app := range apps.Items {
 					appExtraInfo.WithLabelValues(
 						app.Namespace,
