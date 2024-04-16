@@ -82,7 +82,7 @@ func main() {
 					continue
 				}
 
-				if !len(apps.Items) == 0 {
+				if !(len(apps.Items) == 0) {
 					logger.Info("no applications found", "namespace", exporterOpts.namespace)
 					continue
 				}
