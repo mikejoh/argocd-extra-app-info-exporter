@@ -41,6 +41,8 @@ docker-push:
 	docker push \
 		$(IMAGE_REGISTRY)/$(IMAGE_NAME):$(VERSION)
 
+docker-release: docker-build docker-push
+
 test: 
 	$(GOTEST) -v ./...
 
@@ -67,4 +69,4 @@ run:
 install:
 	cp $(BUILDPATH)/$(APPNAME) ~/.local/bin
 
-.PHONY: all build test testcov clean run install dep vet lint
+.PHONY: all build test testcov clean run install dep vet lint docker-build docker-push docker-release
