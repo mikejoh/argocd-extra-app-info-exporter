@@ -78,15 +78,16 @@ func main() {
 			case <-ticker.C:
 				apps, err := clientset.ArgoprojV1alpha1().Applications(exporterOpts.namespace).List(context.Background(), v1.ListOptions{})
 				if err != nil {
-					logger.Warn("failed to list applications: %v", err)
+					logger.Warn("failed to list applications", "err", err)
 					continue
 				}
-				logger.Info("applications found", "num", len(apps.Items))
 
-				if len(apps.Items) == 0 {
+				if !len(apps.Items) == 0 {
 					logger.Info("no applications found", "namespace", exporterOpts.namespace)
 					continue
 				}
+
+				logger.Info("applications found", "num", len(apps.Items))
 
 				for _, app := range apps.Items {
 					appExtraInfo.WithLabelValues(
