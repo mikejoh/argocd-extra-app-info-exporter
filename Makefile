@@ -2,7 +2,7 @@ APPNAME := $(notdir $(CURDIR))
 
 GIT_TAG := $(shell git describe --tags --abbrev=0 2>/dev/null || echo "0.0.0")
 GIT_SHA := $(shell git rev-parse --short HEAD)
-VERSION := $(GIT_TAG)$(shell git diff --quiet || echo "-$(GIT_SHA)-dirty")
+VERSION := $(shell git describe --tags --exact-match 2>/dev/null || echo "$(GIT_SHA)-dirty")
 
 CMDPATH := ./cmd/$(APPNAME)
 BUILDPATH := ./build
