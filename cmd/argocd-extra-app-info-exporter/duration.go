@@ -26,7 +26,7 @@ func (d *DurationFlag) Set(value string) error {
 	case "h":
 		*d = DurationFlag(time.Duration(val) * time.Hour)
 	default:
-		return fmt.Errorf("invalid unit: %s", unit)
+		return fmt.Errorf("invalid unit: %b", unit)
 	}
 	return nil
 }
