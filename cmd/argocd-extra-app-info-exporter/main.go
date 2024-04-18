@@ -83,7 +83,7 @@ func main() {
 					continue
 				}
 
-				if !(len(apps.Items) == 0) {
+				if len(apps.Items) == 0 {
 					logger.Info("no applications found", "namespace", exporterOpts.namespace)
 					continue
 				}
@@ -119,10 +119,8 @@ func main() {
 }
 
 func getClientset() (*argo.Clientset, error) {
-	// in-cluster config
 	config, err := rest.InClusterConfig()
 	if err != nil {
-		// fallback to out-of-cluster config
 		var kubeconfig string
 		if home := homedir.HomeDir(); home != "" {
 			kubeconfig = filepath.Join(home, ".kube", "config")
@@ -135,5 +133,6 @@ func getClientset() (*argo.Clientset, error) {
 
 		return argo.NewForConfig(config)
 	}
+
 	return argo.NewForConfig(config)
 }
