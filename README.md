@@ -6,6 +6,14 @@ This exporter exports a `argocd_extra_app_info` metric which looks like the orig
 
 One of the reasons one would want that label is to create e.g. alerts if the `targetRevision` field is anything else than `main`, this exporter will probably be around until https://github.com/argoproj/argo-cd/pull/15143 merges!
 
+Exported metric labels:
+* `namespace`
+* `name`
+* `project`
+* `revision`
+
+_Please note that this exporter lists all application in a cluster (once per interval), if you've specified a namespace the list of applications will be limited to that namespace. The way applications are fetched might suboptimal but it works._
+
 ## Install
 
 ```
