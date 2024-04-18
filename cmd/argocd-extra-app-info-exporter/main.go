@@ -6,11 +6,11 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"path/filepath"
 	"time"
 
 	"log/slog"
 
-	"github.com/argoproj/argo-cd/v2/pkg/client/clientset/versioned"
 	argo "github.com/argoproj/argo-cd/v2/pkg/client/clientset/versioned"
 	"github.com/mikejoh/argocd-extra-app-info-exporter/internal/buildinfo"
 	"github.com/prometheus/client_golang/prometheus"
@@ -18,6 +18,7 @@ import (
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
+	"k8s.io/client-go/util/homedir"
 )
 
 type exporterOptions struct {
@@ -117,14 +118,22 @@ func main() {
 	}
 }
 
-func getClientset() (*versioned.Clientset, error) {
+func getClientset() (*argo.Clientset, error) {
+	// in-cluster config
 	config, err := rest.InClusterConfig()
 	if err != nil {
-		kubeconfig := clientcmd.NewDefaultClientConfigLoadingRules().GetDefaultFilename()
-		config, err = clientcmd.BuildConfigFromFlags("", kubeconfig)
+		// fallback to out-of-cluster config
+		var kubeconfig string
+		if home := homedir.HomeDir(); home != "" {
+			kubeconfig = filepath.Join(home, ".kube", "config")
+		}
+
+		config, err := clientcmd.BuildConfigFromFlags("", kubeconfig)
 		if err != nil {
 			return nil, err
 		}
+
+		return argo.NewForConfig(config)
 	}
 	return argo.NewForConfig(config)
 }
