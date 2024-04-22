@@ -27,4 +27,8 @@ helm upgrade \
   argocd-extra-app-info-exporter
 ```
 
-Add `--set serviceMonitor.enabled=true` to deploy a `ServiceMonitor` (part of the Prometheus Operator).
+### Extra config
+
+* Add `--set serviceMonitor.enabled=true` to deploy a `ServiceMonitor` (part of the Prometheus Operator).
+* Add `--set prometheusRule.enabled=true` to deploy a proof-of-concept alert rule (`PrometheusRule`, also part of the Prometheus Operator).
+
