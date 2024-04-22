@@ -30,5 +30,4 @@ helm upgrade \
 ### Extra config
 
 * Add `--set serviceMonitor.enabled=true` to deploy a `ServiceMonitor` (part of the Prometheus Operator).
-* Add `--set prometheusRule.enabled=true` to deploy a proof-of-concept alert rule (`PrometheusRule`, also part of the Prometheus Operator).
-
+* Add `--set prometheusRule.enabled=true` to deploy a proof-of-concept [alert rule](https://github.com/mikejoh/helm-charts/blob/main/charts/argocd-extra-app-info-exporter/templates/prometheusrule.yaml#L9-L25) (`PrometheusRule`, also part of the Prometheus Operator).
