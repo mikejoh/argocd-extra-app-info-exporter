@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"strings"
 	"time"
 
 	"log/slog"
@@ -27,6 +28,7 @@ type exporterOptions struct {
 	metricsListenAddress string
 	metricsPath          string
 	namespace            string
+	excludeRevisions     string
 }
 
 const (
@@ -39,13 +41,18 @@ func main() {
 	flag.StringVar(&exporterOpts.metricsListenAddress, "metrics-listen-address", "0.0.0.0:9999", "Set the metrics listen address.")
 	flag.StringVar(&exporterOpts.metricsPath, "metrics-path", "/metrics", "Set the metrics path.")
 	flag.StringVar(&exporterOpts.namespace, "namespace", "", "List all applications from this namespace. Default is all namespaces.")
-
+	flag.StringVar(&exporterOpts.excludeRevisions, "exclude-revisions", "", "Comma-separated list of revisions to exclude from the metrics. Example: 'main,master,HEAD'")
 	flag.Var(&exporterOpts.interval, "interval", "Application fetch interval in human-friendly format (e.g., 5s for 5 seconds, 10m for 10 minutes)")
 	flag.Parse()
 
 	if exporterOpts.version {
 		fmt.Println(buildinfo.Get())
 		os.Exit(0)
+	}
+
+	var revs []string
+	if exporterOpts.excludeRevisions != "" {
+		revs = strings.Split(exporterOpts.excludeRevisions, ",")
 	}
 
 	logger := slog.New(slog.NewJSONHandler(os.Stdout, nil))
@@ -91,6 +98,16 @@ func main() {
 				logger.Info("applications found", "num", len(apps.Items))
 
 				for _, app := range apps.Items {
+					if app.Spec.GetSource().TargetRevision == "" {
+						continue
+					}
+
+					for _, rev := range revs {
+						if app.Spec.GetSource().TargetRevision == rev {
+							continue
+						}
+					}
+
 					appExtraInfo.WithLabelValues(
 						app.Namespace,
 						app.Name,
