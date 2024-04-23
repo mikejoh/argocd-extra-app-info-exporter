@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"slices"
 	"strings"
 	"time"
 
@@ -103,10 +104,8 @@ func main() {
 						continue
 					}
 
-					for _, rev := range revs {
-						if app.Spec.GetSource().TargetRevision == rev {
-							continue
-						}
+					if slices.Contains(revs, app.Spec.GetSource().TargetRevision) {
+						continue
 					}
 
 					appExtraInfo.WithLabelValues(
