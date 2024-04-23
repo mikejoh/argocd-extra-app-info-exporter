@@ -45,6 +45,8 @@ func main() {
 	flag.Var(&exporterOpts.interval, "interval", "Application fetch interval in human-friendly format (e.g., 5s for 5 seconds, 10m for 10 minutes)")
 	flag.Parse()
 
+	logger := slog.New(slog.NewJSONHandler(os.Stdout, nil))
+
 	if exporterOpts.version {
 		fmt.Println(buildinfo.Get())
 		os.Exit(0)
@@ -53,9 +55,8 @@ func main() {
 	var revs []string
 	if exporterOpts.excludeRevisions != "" {
 		revs = strings.Split(exporterOpts.excludeRevisions, ",")
+		logger.Info("excluding the following revisions from metrics export", "revisions", exporterOpts.excludeRevisions)
 	}
-
-	logger := slog.New(slog.NewJSONHandler(os.Stdout, nil))
 
 	if exporterOpts.interval == 0 {
 		exporterOpts.interval = defaultDuration
