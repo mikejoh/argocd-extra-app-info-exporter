@@ -76,6 +76,7 @@ func main() {
 		"name",
 		"project",
 		"revision",
+		"status",
 	})
 
 	prometheus.MustRegister(appExtraInfo)
@@ -100,10 +101,12 @@ func main() {
 				logger.Info("applications found", "num", len(apps.Items))
 
 				for _, app := range apps.Items {
+					// Skip if revision is not set
 					if app.Spec.GetSource().TargetRevision == "" {
 						continue
 					}
 
+					// Skip if revision is in the exclude list
 					if slices.Contains(revs, app.Spec.GetSource().TargetRevision) {
 						continue
 					}
@@ -113,6 +116,7 @@ func main() {
 						app.Name,
 						app.Spec.GetProject(),
 						app.Spec.GetSource().TargetRevision,
+						string(app.Status.Sync.Status),
 					).Set(1)
 				}
 			}
