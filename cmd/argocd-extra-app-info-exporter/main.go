@@ -80,8 +80,9 @@ func main() {
 	})
 
 	prometheus.MustRegister(appExtraInfo)
-
-	logger.Info("starting", "app", buildinfo.Get().Name, "version", buildinfo.Get().Version, "interval", exporterOpts.interval.String())
+  
+  bi := buildinfo.Get()
+	logger.Info("starting", "app", buildinfo.Get().Name, "version", bi.Version, "interval", exporterOpts.interval.String())
 	go func() {
 		ticker := time.NewTicker(time.Duration(exporterOpts.interval))
 		for {
