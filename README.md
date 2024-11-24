@@ -1,5 +1,7 @@
 # argocd-extra-app-info-exporter
 
+[![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/argocd-extra-app-info-exporter)](https://artifacthub.io/packages/search?repo=argocd-extra-app-info-exporter)
+
 `argocd-extra-app-info-exporter` - Exports that one missing metric from ArgoCD.
 
 This exporter exports a `argocd_extra_app_info` metric which looks like the original `argocd_app_info` metric but with the application `revision` field as a label. One of the reasons one would want that label is to create e.g. alerts if the `revision` field is anything else than `main`, this exporter will probably be around until PR [`15143`](https://github.com/argoproj/argo-cd/pull/15143) merges.
