@@ -11,7 +11,6 @@ Exported metric labels:
 * `name`
 * `project`
 * `revision`
-* `status`
 
 _Please note that this exporter lists all application in a cluster (once per interval), if you've specified a namespace the list of applications will be limited to that namespace._
 
