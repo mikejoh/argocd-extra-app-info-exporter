@@ -1,6 +1,6 @@
 # argocd-extra-app-info-exporter
 
-[![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/argocd-extra-app-info-exporter)](https://artifacthub.io/packages/search?repo=argocd-extra-app-info-exporter)
+[![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/mikejoh)](https://artifacthub.io/packages/search?repo=mikejoh)
 
 `argocd-extra-app-info-exporter` - Exports that one missing metric from ArgoCD.
 
