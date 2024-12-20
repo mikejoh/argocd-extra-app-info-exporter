@@ -66,6 +66,7 @@ func main() {
 	clientset, err := getClientset()
 	if err != nil {
 		logger.Error("failed to create clientset", "err", err)
+		os.Exit(1)
 	}
 
 	appExtraInfo := prometheus.NewGaugeVec(prometheus.GaugeOpts{
@@ -135,6 +136,7 @@ func main() {
 
 	if err := httpServer.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 		logger.Error("starting HTTP server failed", "err", err)
+		os.Exit(1)
 	}
 }
 
