@@ -4,7 +4,7 @@ go 1.22.2
 
 require (
 	github.com/argoproj/argo-cd/v2 v2.13.2
-	github.com/prometheus/client_golang v1.20.3
+	github.com/prometheus/client_golang v1.20.5
 	k8s.io/apimachinery v0.31.2
 	k8s.io/client-go v0.31.2
 )
