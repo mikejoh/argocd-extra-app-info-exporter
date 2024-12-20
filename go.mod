@@ -7,7 +7,7 @@ require (
 	github.com/argoproj/argo-cd/v2 v2.13.2
 	github.com/prometheus/client_golang v1.20.5
 	k8s.io/apimachinery v0.32.0
-	k8s.io/client-go v0.31.2
+	k8s.io/client-go v0.32.0
 )
 
 require (
@@ -63,7 +63,6 @@ require (
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/gorilla/websocket v1.5.3 // indirect
 	github.com/gregjones/httpcache v0.0.0-20190611155906-901d90724c79 // indirect
-	github.com/imdario/mergo v0.3.16 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/jbenet/go-context v0.0.0-20150711004518-d14ea06fba99 // indirect
 	github.com/jonboulle/clockwork v0.2.2 // indirect
@@ -124,7 +123,7 @@ require (
 	gopkg.in/warnings.v0 v0.1.2 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
-	k8s.io/api v0.31.2 // indirect
+	k8s.io/api v0.32.0 // indirect
 	k8s.io/apiextensions-apiserver v0.31.2 // indirect
 	k8s.io/apiserver v0.31.2 // indirect
 	k8s.io/cli-runtime v0.31.2 // indirect
