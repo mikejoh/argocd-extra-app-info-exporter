@@ -1,0 +1,21 @@
+version: 2
+project_name: argocd-extra-app-info-exporter
+release:
+  github:
+    owner: mikejoh
+    name: argocd-extra-app-info-exporter
+  name_template: 'v{{ .Tag }}'
+  skip_upload: true
+builds:
+  - id: argocd-extra-app-info-exporter
+    targets:
+      - linux_amd64_v1
+    dir: .
+    main: ./cmd/argocd-extra-app-info-exporter/
+    binary: argocd-extra-app-info-exporter
+    builder: go
+    gobinary: go
+    command: build
+    ldflags:
+      - -s -w -X=github.com/mikejoh/argocd-extra-app-info-exporter/internal/buildinfo.Version={{ .Version }} -X=github.com/mikejoh/argocd-extra-app-info-exporter/internal/buildinfo.Name=rke2diff -X=github.com/mikejoh/argocd-extra-app-info-exporter/internal/buildinfo.GitSHA={{ .Commit }}
+dist: ./build

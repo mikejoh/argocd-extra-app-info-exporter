@@ -8,7 +8,7 @@ CMDPATH := ./cmd/$(APPNAME)
 BUILDPATH := ./build
 
 # Go parameters
-GOVERSION=1.22.2
+GOVERSION=1.23.4
 GOCMD := go
 GOBUILD := $(GOCMD) build
 GOCLEAN := $(GOCMD) clean
@@ -33,7 +33,6 @@ docker-build:
 		-t $(IMAGE_REGISTRY)/$(IMAGE_NAME):$(VERSION) \
 		--build-arg=GOVERSION=$(GOVERSION) \
 		--build-arg VERSION=$(VERSION) \
-		--build-arg APPNAME=$(APPNAME) \
 		--build-arg GIT_SHA=$(GIT_SHA) \
 		.
 
@@ -56,7 +55,7 @@ vet:
 	$(GOCMD) vet ./...
 
 lint:
-	golangci-lint run -v --timeout=15m ./...
+	golangci-lint run -v --timeout=1m ./...
 
 clean: 
 	$(GOCLEAN)
