@@ -76,12 +76,11 @@ func main() {
 		"name",
 		"project",
 		"revision",
-		"status",
 	})
 
 	prometheus.MustRegister(appExtraInfo)
-  
-  bi := buildinfo.Get()
+
+	bi := buildinfo.Get()
 	logger.Info("starting", "app", buildinfo.Get().Name, "version", bi.Version, "interval", exporterOpts.interval.String())
 	go func() {
 		ticker := time.NewTicker(time.Duration(exporterOpts.interval))
@@ -117,7 +116,6 @@ func main() {
 						app.Name,
 						app.Spec.GetProject(),
 						app.Spec.GetSource().TargetRevision,
-						string(app.Status.Sync.Status),
 					).Set(1)
 				}
 			}
