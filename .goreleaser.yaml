@@ -17,5 +17,5 @@ builds:
     gobinary: go
     command: build
     ldflags:
-      - -s -w -X=github.com/mikejoh/argocd-extra-app-info-exporter/internal/buildinfo.Version={{ .Version }} -X=github.com/mikejoh/argocd-extra-app-info-exporter/internal/buildinfo.Name=rke2diff -X=github.com/mikejoh/argocd-extra-app-info-exporter/internal/buildinfo.GitSHA={{ .Commit }}
+      - -s -w -X=github.com/mikejoh/argocd-extra-app-info-exporter/internal/buildinfo.Version={{ .Version }} -X=github.com/mikejoh/argocd-extra-app-info-exporter/internal/buildinfo.Name=argocd-extra-app-info-exporter -X=github.com/mikejoh/argocd-extra-app-info-exporter/internal/buildinfo.GitSHA={{ .Commit }}
 dist: ./build
