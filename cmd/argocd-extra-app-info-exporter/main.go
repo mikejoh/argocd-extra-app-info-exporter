@@ -77,6 +77,7 @@ func main() {
 		"name",
 		"project",
 		"revision",
+		"source",
 	})
 
 	prometheus.MustRegister(appExtraInfo)
@@ -99,17 +100,55 @@ func main() {
 					continue
 				}
 
-				logger.Info("applications found", "num", len(apps.Items))
+				skippedApps := map[string]struct{}{}
 
 				for _, app := range apps.Items {
+					if app.Spec.HasMultipleSources() {
+						for _, source := range app.Spec.Sources {
+							// Skip if revision is not set
+							if source.TargetRevision == "" {
+								continue
+							}
+
+							// Skip if revision is in the exclude list
+							if slices.Contains(revs, source.TargetRevision) {
+								skippedApps[app.Name] = struct{}{}
+								continue
+							}
+
+							srcType, err := source.ExplicitType()
+							if err != nil {
+								logger.Warn("failed to get source type", "err", err)
+							}
+
+							appExtraInfo.WithLabelValues(
+								app.Namespace,
+								app.Name,
+								app.Spec.GetProject(),
+								source.TargetRevision,
+								strings.ToLower(fmt.Sprintf("%v", *srcType)),
+							).Set(1)
+						}
+
+						continue
+					}
+
+					src := app.Spec.GetSource()
+
 					// Skip if revision is not set
-					if app.Spec.GetSource().TargetRevision == "" {
+					if src.TargetRevision == "" {
 						continue
 					}
 
 					// Skip if revision is in the exclude list
-					if slices.Contains(revs, app.Spec.GetSource().TargetRevision) {
+					if slices.Contains(revs, src.TargetRevision) {
+						skippedApps[app.Name] = struct{}{}
 						continue
+					}
+
+					srcType, err := app.Spec.Source.ExplicitType()
+					if err != nil {
+						logger.Warn("failed to get source type", "err", err)
 					}
 
 					appExtraInfo.WithLabelValues(
@@ -117,8 +156,11 @@ func main() {
 						app.Name,
 						app.Spec.GetProject(),
 						app.Spec.GetSource().TargetRevision,
+						strings.ToLower(fmt.Sprintf("%v", *srcType)),
 					).Set(1)
 				}
+
+				logger.Info("applications", "found", len(apps.Items), "filtered", len(skippedApps))
 			}
 		}
 	}()
