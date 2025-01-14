@@ -105,6 +105,7 @@ func main() {
 				for _, app := range apps.Items {
 					if app.Spec.HasMultipleSources() {
 						for _, source := range app.Spec.Sources {
+							// Skip if revision is not set
 							if source.TargetRevision == "" {
 								continue
 							}
@@ -148,7 +149,6 @@ func main() {
 						logger.Warn("failed to get source type", "err", err)
 					}
 
-					// Source type here
 					appExtraInfo.WithLabelValues(
 						app.Namespace,
 						app.Name,
