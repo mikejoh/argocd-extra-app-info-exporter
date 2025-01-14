@@ -100,7 +100,7 @@ func main() {
 					continue
 				}
 
-				logger.Info("applications found", "num", len(apps.Items))
+				skippedApps := map[string]struct{}{}
 
 				for _, app := range apps.Items {
 					if app.Spec.HasMultipleSources() {
@@ -112,6 +112,7 @@ func main() {
 
 							// Skip if revision is in the exclude list
 							if slices.Contains(revs, source.TargetRevision) {
+								skippedApps[app.Name] = struct{}{}
 								continue
 							}
 
@@ -141,6 +142,7 @@ func main() {
 
 					// Skip if revision is in the exclude list
 					if slices.Contains(revs, src.TargetRevision) {
+						skippedApps[app.Name] = struct{}{}
 						continue
 					}
 
@@ -157,6 +159,8 @@ func main() {
 						strings.ToLower(fmt.Sprintf("%v", *srcType)),
 					).Set(1)
 				}
+
+				logger.Info("applications", "found", len(apps.Items), "filtered", len(skippedApps))
 			}
 		}
 	}()
