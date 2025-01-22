@@ -81,6 +81,8 @@ func main() {
 
 	prometheus.MustRegister(appExtraInfo)
 
+	lastSeenRevisions := make(map[string]string)
+
 	bi := buildinfo.Get()
 	logger.Info("starting", "app", buildinfo.Get().Name, "version", bi.Version, "interval", exporterOpts.interval.String())
 	go func() {
@@ -111,6 +113,20 @@ func main() {
 					if slices.Contains(revs, app.Spec.GetSource().TargetRevision) {
 						continue
 					}
+
+					appKey := fmt.Sprintf("%s/%s", app.Namespace, app.Name)
+					lastRevision, exists := lastSeenRevisions[appKey]
+
+					if exists && lastRevision != app.Spec.GetSource().TargetRevision {
+						appExtraInfo.DeleteLabelValues(
+							app.Namespace,
+							app.Name,
+							app.Spec.GetProject(),
+							lastRevision,
+						)
+					}
+
+					lastSeenRevisions[appKey] = app.Spec.GetSource().TargetRevision
 
 					appExtraInfo.WithLabelValues(
 						app.Namespace,
