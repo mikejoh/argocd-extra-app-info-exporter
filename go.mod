@@ -1,6 +1,7 @@
 module github.com/mikejoh/argocd-extra-app-info-exporter
 
 go 1.23.4
+toolchain go1.24.1
 
 replace (
 	k8s.io/api => k8s.io/api v0.31.0
@@ -10,7 +11,7 @@ replace (
 require (
 	github.com/argoproj/argo-cd/v2 v2.14.4
 	github.com/prometheus/client_golang v1.21.0
-	k8s.io/apimachinery v0.32.2
+	k8s.io/apimachinery v0.32.3
 	k8s.io/client-go v0.32.0
 )
 
