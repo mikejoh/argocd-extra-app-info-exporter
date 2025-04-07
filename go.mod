@@ -1,6 +1,7 @@
 module github.com/mikejoh/argocd-extra-app-info-exporter
 
 go 1.23.4
+
 toolchain go1.24.1
 
 replace (
@@ -9,7 +10,7 @@ replace (
 )
 
 require (
-	github.com/argoproj/argo-cd/v2 v2.14.8
+	github.com/argoproj/argo-cd/v2 v2.14.9
 	github.com/prometheus/client_golang v1.21.1
 	k8s.io/apimachinery v0.32.3
 	k8s.io/client-go v0.32.0
@@ -23,7 +24,7 @@ require (
 	github.com/Masterminds/semver/v3 v3.3.1 // indirect
 	github.com/Microsoft/go-winio v0.6.1 // indirect
 	github.com/ProtonMail/go-crypto v1.1.5 // indirect
-	github.com/argoproj/gitops-engine v0.7.1-0.20250318152039-0fa7514ea01d // indirect
+	github.com/argoproj/gitops-engine v0.7.1-0.20250328191959-6d3cf122b03f // indirect
 	github.com/argoproj/pkg v0.13.7-0.20230626144333-d56162821bd1 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/blang/semver/v4 v4.0.0 // indirect
