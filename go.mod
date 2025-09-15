@@ -10,7 +10,7 @@ replace (
 require (
 	github.com/argoproj/argo-cd/v2 v2.14.13
 	github.com/prometheus/client_golang v1.23.2
-	k8s.io/apimachinery v0.34.0
+	k8s.io/apimachinery v0.34.1
 	k8s.io/client-go v0.32.0
 )
 
