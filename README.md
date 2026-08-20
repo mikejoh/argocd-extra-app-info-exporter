@@ -1,6 +1,10 @@
 # argocd-extra-app-info-exporter
 
 [![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/mikejoh)](https://artifacthub.io/packages/search?repo=mikejoh)
+[![CI](https://github.com/mikejoh/argocd-extra-app-info-exporter/actions/workflows/go.yml/badge.svg)](https://github.com/mikejoh/argocd-extra-app-info-exporter/actions/workflows/go.yml)
+[![Release](https://img.shields.io/github/v/release/mikejoh/argocd-extra-app-info-exporter)](https://github.com/mikejoh/argocd-extra-app-info-exporter/releases/latest)
+[![Go Report Card](https://goreportcard.com/badge/github.com/mikejoh/argocd-extra-app-info-exporter)](https://goreportcard.com/report/github.com/mikejoh/argocd-extra-app-info-exporter)
+[![License](https://img.shields.io/github/license/mikejoh/argocd-extra-app-info-exporter)](https://github.com/mikejoh/argocd-extra-app-info-exporter/blob/main/LICENSE)
 
 `argocd-extra-app-info-exporter` - Exports that one missing metric from ArgoCD.
 
